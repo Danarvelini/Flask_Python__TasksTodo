@@ -23,10 +23,35 @@ def index():
             db.session.commit()
             return redirect('/')
         except:
-            return("Error adding task to Database")
+            return"Error adding task to Database"
     else:
         tasks = Todo.query.order_by(Todo.id).all()
         return render_template('index.html', tasks=tasks)
+    
+@app.route('/update/<int:id>', methods=['GET','POST'])
+def update(id):
+    task = Todo.query.get_or_404(id)
+    
+    if request.method == 'POST':
+        task.content = request.form['content']
+        try:
+            db.session.commit()
+            return redirect('/')
+        except:
+            return"Error updating your task"
+
+    else:
+        return render_template('update.html', task=task)
+    
+@app.route('/delete/<int:id>')
+def delete(id):
+    taskToDelete = Todo.query.get_or_404(id)
+    try:
+        db.session.delete(taskToDelete)
+        db.session.commit()
+        return redirect('/')
+    except:
+        return"Error deleting your task"
 
 if __name__ == '__main__':
     app.run(debug=True)
