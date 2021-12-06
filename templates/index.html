@@ -13,19 +13,21 @@
             <th>Tasks</th>
             <th>Actions</th>
         </tr>
-        <tr>
-            <td></td>
-            <td>
-                <a href="">Delete</a>
-                <br>
-                <a href="">Update</a>
-            </td>
-        </tr>
+        {%for task in tasks%}
+            <tr>
+                <td>{{task.content}}</td>
+                <td>
+                    <a href="">Delete</a>
+                    <br>
+                    <a href="">Update</a>
+                </td>
+            </tr>
+        {%endfor%}
     </table>
     
     <form action="/" method="POST">
     <input type="text" name="content" id="content" placeholder="Insira o texto">
-    <input type="submit" value="Add">
+    <input type="submit"value="Add">
     </form>
 </div>
 {%endblock %}

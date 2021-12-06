@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app=Flask(__name__)
@@ -15,9 +15,18 @@ class Todo(db.Model):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        return "Oi"
+        requestedTask = request.form['content']
+        newTask = Todo(content=requestedTask)
+        
+        try:
+            db.session.add(newTask)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return("Error adding task to Database")
     else:
-        return render_template('index.html')
+        tasks = Todo.query.order_by(Todo.id).all()
+        return render_template('index.html', tasks=tasks)
 
 if __name__ == '__main__':
     app.run(debug=True)
