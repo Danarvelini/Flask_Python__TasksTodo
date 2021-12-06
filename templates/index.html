@@ -1,6 +1,7 @@
 {%extends 'base.html' %}
 
 {%block head%}
+<title>To Do Flask</title>
 {%endblock %}
 
 {%block body%}
@@ -21,5 +22,10 @@
             </td>
         </tr>
     </table>
+    
+    <form action="/" method="POST">
+    <input type="text" name="content" id="content" placeholder="Insira o texto">
+    <input type="submit" value="Add">
+    </form>
 </div>
 {%endblock %}
